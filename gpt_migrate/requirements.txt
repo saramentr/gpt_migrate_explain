@@ -1,7 +1,7 @@
 typer
 langchain
 yaspin
-openai
+openai==0.28.1
 tree_sitter
 litellm==0.1.213
 pydantic==1.10.8
