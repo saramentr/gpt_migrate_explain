@@ -15,13 +15,24 @@ class AI:
 
     def write_code(self, prompt):
         message = [{"role": "user", "content": str(prompt)}]
-        response = completion(
-            messages=message,
-            stream=False,
-            model=self.model_name,
-            max_tokens=self.max_tokens,
-            temperature=self.temperature,
-        )
+        if self.model_name.startswith('ollama'):
+            response = completion(
+                messages=message,
+                stream=False,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                timeout=6000,
+                api_base="http://192.168.119.30:11434",
+            )
+        else:
+            response = completion(
+                messages=message,
+                stream=False,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+            )
         if response["choices"][0]["message"]["content"].startswith("INSTRUCTIONS:"):
             return ("INSTRUCTIONS:", "", response["choices"][0]["message"]["content"][14:])
         else:
@@ -30,13 +41,24 @@ class AI:
 
     def run(self, prompt):
         message = [{"role": "user", "content": str(prompt)}]
-        response = completion(
-            messages=message,
-            stream=True,
-            model=self.model_name,
-            max_tokens=self.max_tokens,
-            temperature=self.temperature,
-        )
+        if self.model_name.startswith('ollama'):
+            response = completion(
+                messages=message,
+                stream=True,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                timeout=6000,
+                api_base="http://192.168.119.30:11434",
+            )
+        else:
+            response = completion(
+                messages=message,
+                stream=True,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+            )
         chat = ""
         for chunk in response:
             delta = chunk["choices"][0]["delta"]
