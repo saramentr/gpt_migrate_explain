@@ -25,6 +25,16 @@ class AI:
                 timeout=6000,
                 api_base="http://192.168.119.30:11434",
             )
+        elif self.model_name.startswith('llamafile'):
+            response = completion(
+                messages=message,
+                stream=False,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                timeout=6000,
+                api_base="http://192.168.119.30:7070",
+            )
         else:
             response = completion(
                 messages=message,
@@ -50,6 +60,16 @@ class AI:
                 temperature=self.temperature,
                 timeout=6000,
                 api_base="http://192.168.119.30:11434",
+            )
+        elif self.model_name.startswith('llamafile'):
+            response = completion(
+                messages=message,
+                stream=True,
+                model=self.model_name,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                timeout=6000,
+                api_base="http://192.168.119.30:7070",
             )
         else:
             response = completion(
